@@ -60,7 +60,7 @@ def private_panel(_):
             ),
             InlineKeyboardButton(
                 text="⌯ Nᴇᴛᴡᴏʀᴋ ⌯",
-                url="https://t.me/ArchonNetwork",
+                url="https://t.me/FoxryHQ",
                 style=ButtonStyle.SUCCESS,
                 icon_custom_emoji_id=5422484648871626179,
             ),
