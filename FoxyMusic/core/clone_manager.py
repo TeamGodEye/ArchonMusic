@@ -148,12 +148,17 @@ class CloneManager:
                     continue
                 if callback_module in {
                     "FoxyMusic.plugins.misc.broadcast",
-                    "FoxyMusic.plugins.tools.reload",
                     "FoxyMusic.plugins.tools.dev",
                     "FoxyMusic.plugins.tools.disk",
                     "FoxyMusic.plugins.tools.stats",
                 }:
                     continue
+                # The reload module also owns the generic `close` callback
+                # used by music/help panels. Keep only that callback in clones;
+                # operational reload/admin-cache commands stay main-bot-only.
+                if callback_module == "FoxyMusic.plugins.tools.reload":
+                    if getattr(callback, "__name__", "") != "close_menu":
+                        continue
                 cloned_handler = copy.copy(original)
                 cloned_handler.callback = self._wrap_handler(callback, clone_client)
                 clone_client.add_handler(cloned_handler, group=group)
