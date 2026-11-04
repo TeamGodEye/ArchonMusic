@@ -1,31 +1,10 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
-
-# IMPORTANT: This file is for INLINE KEYBOARD MARKUP functions only.
-# It is NOT the stream queue management module (that lives at
-# FoxyMusic/utils/stream/queue.py and contains put_queue / put_queue_index).
-#
-# This module provides the inline keyboard layouts used by the queue UI:
-#   - queue_markup        : "Now Playing" footer buttons (Queue + Close,
-#                           or Timer + Queue + Close when duration is known)
-#   - queue_back_markup   : Back + Close row shown after clicking GetTimer
-#   - aq_markup           : "Added to Queue" notification close button
-#
-# These functions are imported by callers like:
-#   FoxyMusic/utils/stream/stream.py:
-#       from FoxyMusic.utils.inline import aq_markup, close_markup, stream_markup
-#   FoxyMusic/plugins/tools/queue.py:
-#       from FoxyMusic.utils.inline import queue_back_markup, queue_markup
-#
-# If this file is replaced with stream queue logic (put_queue / put_queue_index),
-# the import chain breaks at startup with:
-#   ImportError: cannot import name 'aq_markup' from 'FoxyMusic.utils.inline'
 
 from typing import Union
 

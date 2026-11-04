@@ -1,12 +1,12 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
 
+from FoxyMusic.core.client_context import get_client
 from typing import Union
 
 from pyrogram.enums import ButtonStyle
@@ -127,7 +127,7 @@ def private_help_panel(_):
         [
             InlineKeyboardButton(
                 text=_["S_B_4"],
-                url=f"https://t.me/{app.username}?start=help",
+                url=f"https://t.me/{get_client().username}?start=help",
                 style=ButtonStyle.PRIMARY,
                 icon_custom_emoji_id=5260512129240276089,
             ),

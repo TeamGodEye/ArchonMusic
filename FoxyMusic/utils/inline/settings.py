@@ -1,21 +1,10 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
-
-# ─── Button color policy (per project-wide spec) ────────────────────────────
-# The buttons below follow a consistent color convention:
-#   - PRIMARY  (blue)   → primary/enable/info buttons (left column of sub-menus)
-#   - SUCCESS  (green)  → toggle/confirmation buttons (right column of sub-menus)
-#   - DANGER   (red)     → close / delete buttons
-#
-# These are applied ONLY to InlineKeyboardButton's `style=` attribute — the
-# button text, callback_data, and layout are 100% unchanged from the original
-# behaviour, so all existing callback handlers continue to work identically.
 
 from typing import Union
 
