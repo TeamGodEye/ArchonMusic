@@ -1,12 +1,12 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
 
+from FoxyMusic.core.client_context import get_client
 import os
 from random import randint
 from typing import Union
@@ -70,7 +70,7 @@ async def update_stream_ui(
                         pass
         # Path B: send a brand-new photo message
         try:
-            return await app.send_photo(
+            return await get_client().send_photo(
                 original_chat_id,
                 photo=img,
                 has_spoiler=True,
@@ -84,7 +84,7 @@ async def update_stream_ui(
             # If the photo upload fails, at least send the caption as text
             # so the user isn't left with an empty/missing now-playing UI.
             try:
-                return await app.send_message(
+                return await get_client().send_message(
                     original_chat_id,
                     text=caption,
                     reply_markup=markup,
@@ -116,7 +116,7 @@ async def update_stream_ui(
                     except Exception:
                         pass
         try:
-            return await app.send_message(
+            return await get_client().send_message(
                 original_chat_id,
                 text=caption,
                 reply_markup=markup,
@@ -165,7 +165,7 @@ async def update_queue_ui(
                 except Exception:
                     pass
     else:
-        await app.send_message(
+        await get_client().send_message(
             chat_id=original_chat_id,
             text=caption,
             reply_markup=InlineKeyboardMarkup(button),
@@ -262,7 +262,7 @@ async def stream(
                     _, chat_id, await is_autoplay_on(chat_id), await is_thumb_on(chat_id), await get_filter(chat_id)
                 )
                 caption = _["stream_1"].format(
-                    f"https://t.me/{app.username}?start=info_{vidid}",
+                    f"https://t.me/{get_client().username}?start=info_{vidid}",
                     title[:23],
                     duration_min,
                     user_name,
@@ -282,7 +282,7 @@ async def stream(
                 car = msg
             carbon = await Carbon.generate(car, randint(100, 10000000))
             upl = close_markup(_)
-            return await app.send_photo(
+            return await get_client().send_photo(
                 original_chat_id,
                 has_spoiler=True,
                 photo=carbon,
@@ -349,7 +349,7 @@ async def stream(
                 _, chat_id, await is_autoplay_on(chat_id), await is_thumb_on(chat_id), await get_filter(chat_id)
             )
             caption = _["stream_1"].format(
-                f"https://t.me/{app.username}?start=info_{vidid}",
+                f"https://t.me/{get_client().username}?start=info_{vidid}",
                 title[:23],
                 duration_min,
                 user_name,
@@ -513,7 +513,7 @@ async def stream(
                 _, chat_id, await is_autoplay_on(chat_id), await is_thumb_on(chat_id), await get_filter(chat_id)
             )
             caption = _["stream_1"].format(
-                f"https://t.me/{app.username}?start=info_{vidid}",
+                f"https://t.me/{get_client().username}?start=info_{vidid}",
                 title[:23],
                 duration_min,
                 user_name,
