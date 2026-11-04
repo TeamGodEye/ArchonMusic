@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 import random
 import string
@@ -98,7 +103,7 @@ async def play_commnd(
         seconds_to_min(audio_telegram.duration)
         if (audio_telegram.duration) > config.DURATION_LIMIT:
             return await mystic.edit_text(
-                _["play_6"].format(config.DURATION_LIMIT_MIN, app.mention)
+                _["play_6"].format(config.DURATION_LIMIT_MIN, get_client().mention)
             )
         file_path = await Telegram.get_filepath(audio=audio_telegram)
         if await Telegram.download(_, message, mystic, file_path):
@@ -225,7 +230,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spplay"
                 img = config.SPOTIFY_PLAYLIST_IMG_URL
-                cap = _["play_11"].format(app.mention, message.from_user.mention)
+                cap = _["play_11"].format(get_client().mention, message.from_user.mention)
             elif "album" in url:
                 try:
                     details, plist_id = await Spotify.album(url)
@@ -234,7 +239,7 @@ async def play_commnd(
                 streamtype = "playlist"
                 plist_type = "spalbum"
                 img = config.SPOTIFY_ALBUM_IMG_URL
-                cap = _["play_11"].format(app.mention, message.from_user.mention)
+                cap = _["play_11"].format(get_client().mention, message.from_user.mention)
             elif "artist" in url:
                 try:
                     details, plist_id = await Spotify.artist(url)
@@ -263,7 +268,7 @@ async def play_commnd(
                     return await mystic.edit_text(_["play_3"])
                 streamtype = "playlist"
                 plist_type = "apple"
-                cap = _["play_12"].format(app.mention, message.from_user.mention)
+                cap = _["play_12"].format(get_client().mention, message.from_user.mention)
                 img = url
             else:
                 return await mystic.edit_text(_["play_3"])
@@ -285,7 +290,7 @@ async def play_commnd(
                 return await mystic.edit_text(
                     _["play_6"].format(
                         config.DURATION_LIMIT_MIN,
-                        app.mention,
+                        get_client().mention,
                     )
                 )
             try:
@@ -310,7 +315,7 @@ async def play_commnd(
                 await Alone.stream_call(url)
             except NoActiveGroupCall:
                 await mystic.edit_text(_["black_9"])
-                return await app.send_message(
+                return await get_client().send_message(
                     chat_id=config.LOGGER_ID,
                     text=_["play_17"],
                 )
@@ -366,7 +371,7 @@ async def play_commnd(
                     return await mystic.edit_text(
                         _["play_6"].format(
                             config.DURATION_LIMIT_MIN,
-                            app.mention,
+                            get_client().mention,
                         )
                     )
             else:
@@ -522,7 +527,7 @@ async def play_music(client, CallbackQuery, _):
         duration_sec = time_to_seconds(details["duration_min"])
         if duration_sec > config.DURATION_LIMIT:
             return await mystic.edit_text(
-                _["play_6"].format(config.DURATION_LIMIT_MIN, app.mention)
+                _["play_6"].format(config.DURATION_LIMIT_MIN, get_client().mention)
             )
     else:
         buttons = livestream_markup(
@@ -748,7 +753,7 @@ async def playlist_thumb_cb(client, CallbackQuery, _):
         await thumb_on(chat_id)
 
     buttons = playlist_markup(_, vidid, user_id, ptype, channel, fplay, await is_thumb_on(chat_id))
-    cap = _["play_11"].format(app.mention, CallbackQuery.from_user.mention) # Simplified
+    cap = _["play_11"].format(get_client().mention, CallbackQuery.from_user.mention) # Simplified
 
     if False:  # thumbnails disabled
         try:
