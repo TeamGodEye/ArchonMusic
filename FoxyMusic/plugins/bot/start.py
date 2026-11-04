@@ -76,11 +76,11 @@ def _build_start_caption(message: Message, template: str) -> str:
         f'<a href="tg://user?id={int(user.id)}">{safe_user_name}</a>'
     )
 
-    # ``app`` is the project's custom ``Alone`` client.  It exposes
-    # ``name``, ``username`` and ``mention`` after startup, but it does NOT
-    # expose ``first_name`` / ``last_name`` attributes.
-    bot_username = getattr(app, "username", None)
-    bot_name = getattr(app, "name", None) or bot_username or "Bot"
+    # Resolve the bot that actually received this update.  Clone handlers
+    # run in client_context(), so get_client() returns the clone here.
+    active_client = get_client()
+    bot_username = getattr(active_client, "username", None)
+    bot_name = getattr(active_client, "name", None) or bot_username or "Bot"
     safe_bot_name = html.escape(str(bot_name).strip(), quote=False)
     if bot_username:
         bot_mention = (
@@ -139,7 +139,13 @@ async def _send_start_photo_with_effect(message: Message, photo: str, caption: s
         "reply_parameters": json.dumps({"message_id": message.id}),
     }
 
-    url = f"https://api.telegram.org/bot{config.BOT_TOKEN}/sendPhoto"
+    # Never use config.BOT_TOKEN here: it belongs to the primary bot.
+    # Each cloned bot must send its own private /start photo with its token.
+    active_client = get_client()
+    bot_token = getattr(active_client, "bot_token", None)
+    if not bot_token:
+        raise RuntimeError("The active Telegram client has no bot token.")
+    url = f"https://api.telegram.org/bot{bot_token}/sendPhoto"
     timeout = aiohttp.ClientTimeout(total=30)
     async with aiohttp.ClientSession(timeout=timeout) as session:
         async with session.post(url, data=payload) as response:
@@ -167,7 +173,7 @@ async def start_pm(client, message: Message, _):
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
             if await is_on_off(2):
-                return await app.send_message(
+                return await get_client().send_message(
                     chat_id=config.LOGGER_ID,
                     text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
@@ -214,7 +220,7 @@ async def start_pm(client, message: Message, _):
                 reply_markup=key,
             )
             if await is_on_off(2):
-                return await app.send_message(
+                return await get_client().send_message(
                     chat_id=config.LOGGER_ID,
                     text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
@@ -227,7 +233,7 @@ async def start_pm(client, message: Message, _):
             out=out,
         )
         if await is_on_off(2):
-            return await app.send_message(
+            return await get_client().send_message(
                 chat_id=config.LOGGER_ID,
                 text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
             )
