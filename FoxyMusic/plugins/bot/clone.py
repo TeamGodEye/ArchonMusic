@@ -5,6 +5,7 @@
 while sharing FoxyMusic's per-chat queue and playback engine.
 """
 from pyrogram import filters
+from pyrogram.enums import ChatType
 from pyrogram.types import Message
 
 import config
@@ -34,7 +35,7 @@ async def clone_command(client, message: Message):
     token = args[0].strip()
     if not message.from_user:
         return await message.reply_text("A user account is required to create a clone.")
-    if message.chat.type != "private":
+    if message.chat.type != ChatType.PRIVATE:
         try:
             await message.delete()
         except Exception:
@@ -104,7 +105,7 @@ async def unclone_command(client, message: Message):
         )
 
     target = args[0].strip()
-    if ":" in target and message.chat.type != "private":
+    if ":" in target and message.chat.type != ChatType.PRIVATE:
         try:
             await message.delete()
         except Exception:
