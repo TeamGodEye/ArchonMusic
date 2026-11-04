@@ -1,12 +1,12 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
 
+from FoxyMusic.core.client_context import get_client
 import asyncio
 
 from pyrogram.enums import ButtonStyle, ChatMemberStatus
@@ -47,7 +47,7 @@ def PlayWrapper(command):
         if await is_maintenance() is False:
             if message.from_user.id not in SUDOERS:
                 return await message.reply_text(
-                    text=f"{app.mention} ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ, ᴠɪsɪᴛ <a href={SUPPORT_CHAT}>sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ</a> ғᴏʀ ᴋɴᴏᴡɪɴɢ ᴛʜᴇ ʀᴇᴀsᴏɴ.",
+                    text=f"{get_client().mention} ɪs ᴜɴᴅᴇʀ ᴍᴀɪɴᴛᴇɴᴀɴᴄᴇ, ᴠɪsɪᴛ <a href={SUPPORT_CHAT}>sᴜᴘᴘᴏʀᴛ ᴄʜᴀᴛ</a> ғᴏʀ ᴋɴᴏᴡɪɴɢ ᴛʜᴇ ʀᴇᴀsᴏɴ.",
                     disable_web_page_preview=True,
                 )
 
@@ -80,7 +80,7 @@ def PlayWrapper(command):
             if chat_id is None:
                 return await message.reply_text(_["setting_7"])
             try:
-                chat = await app.get_chat(chat_id)
+                chat = await get_client().get_chat(chat_id)
             except:
                 return await message.reply_text(_["cplay_4"])
             channel = chat.title
@@ -115,7 +115,7 @@ def PlayWrapper(command):
             userbot = await get_assistant(chat_id)
             try:
                 try:
-                    get = await app.get_chat_member(chat_id, userbot.id)
+                    get = await get_client().get_chat_member(chat_id, userbot.id)
                 except ChatAdminRequired:
                     return await message.reply_text(_["call_1"])
                 if (
@@ -123,11 +123,11 @@ def PlayWrapper(command):
                     or get.status == ChatMemberStatus.RESTRICTED
                 ):
                     try:
-                        await app.unban_chat_member(chat_id, userbot.id)
+                        await get_client().unban_chat_member(chat_id, userbot.id)
                     except:
                         return await message.reply_text(
                             _["call_2"].format(
-                                app.mention, userbot.id, userbot.name, userbot.username
+                                get_client().mention, userbot.id, userbot.name, userbot.username
                             )
                         )
                 if get.status not in [
@@ -148,36 +148,36 @@ def PlayWrapper(command):
                             pass
                     else:
                         try:
-                            invitelink = await app.export_chat_invite_link(chat_id)
+                            invitelink = await get_client().export_chat_invite_link(chat_id)
                         except ChatAdminRequired:
                             return await message.reply_text(_["call_1"])
                         except Exception as e:
                             return await message.reply_text(
-                                _["call_3"].format(app.mention, type(e).__name__)
+                                _["call_3"].format(get_client().mention, type(e).__name__)
                             )
 
                 if invitelink.startswith("https://t.me/+"):
                     invitelink = invitelink.replace(
                         "https://t.me/+", "https://t.me/joinchat/"
                     )
-                myu = await message.reply_text(_["call_4"].format(app.mention))
+                myu = await message.reply_text(_["call_4"].format(get_client().mention))
                 try:
                     await asyncio.sleep(1)
                     await userbot.join_chat(invitelink)
                 except InviteRequestSent:
                     try:
-                        await app.approve_chat_join_request(chat_id, userbot.id)
+                        await get_client().approve_chat_join_request(chat_id, userbot.id)
                     except Exception as e:
                         return await message.reply_text(
-                            _["call_3"].format(app.mention, type(e).__name__)
+                            _["call_3"].format(get_client().mention, type(e).__name__)
                         )
                     await asyncio.sleep(3)
-                    await myu.edit(_["call_5"].format(app.mention))
+                    await myu.edit(_["call_5"].format(get_client().mention))
                 except UserAlreadyParticipant:
                     pass
                 except Exception as e:
                     return await message.reply_text(
-                        _["call_3"].format(app.mention, type(e).__name__)
+                        _["call_3"].format(get_client().mention, type(e).__name__)
                     )
 
                 links[chat_id] = invitelink
