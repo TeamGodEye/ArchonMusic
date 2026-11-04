@@ -165,10 +165,12 @@ class CloneManager:
             )
         return attached
 
-    async def _start_client(self, token):
+    async def _start_client(self, token, owner_id=None):
         fingerprint = token_fingerprint(token)
         current = self.clients.get(fingerprint)
         if current is not None and getattr(current, "is_connected", False):
+            if owner_id is not None:
+                current.owner_id = int(owner_id)
             return current
 
         client = Client(
@@ -180,6 +182,9 @@ class CloneManager:
             parse_mode=ParseMode.HTML,
             max_concurrent_transmissions=7,
         )
+        # The start panel must identify the person who owns this clone, not
+        # the owner configured for the primary bot.
+        client.owner_id = int(owner_id if owner_id is not None else config.OWNER_ID)
         try:
             self._attach_handlers(client)
             await client.start()
@@ -245,7 +250,7 @@ class CloneManager:
                 return True, f"@{client.username} is already running.", client.username
 
             try:
-                client = await self._start_client(token)
+                client = await self._start_client(token, owner_id=owner_id)
             except Exception as exc:
                 LOGGER(__name__).warning(
                     "Clone startup failed for fingerprint %s: %s",
@@ -345,7 +350,9 @@ class CloneManager:
             LOGGER(__name__).exception("Could not delete clone record")
             # Best effort rollback: keep the clone live if its record remains.
             try:
-                self.clients[fingerprint] = await self._start_client(token_plain)
+                self.clients[fingerprint] = await self._start_client(
+                    token_plain, owner_id=record.get("owner_id", config.OWNER_ID)
+                )
             except Exception:
                 pass
             return False, "Could not remove the database record; please retry."
@@ -367,7 +374,9 @@ class CloneManager:
                     token = self._decrypt(record["token_encrypted"])
                     if not TOKEN_RE.fullmatch(token):
                         raise ValueError("stored token has invalid format")
-                    await self._start_client(token)
+                    await self._start_client(
+                        token, owner_id=record.get("owner_id", config.OWNER_ID)
+                    )
                     restored += 1
                 except Exception as exc:
                     failed += 1
@@ -401,7 +410,9 @@ class CloneManager:
                     pass
             try:
                 token = self._decrypt(record["token_encrypted"])
-                await self._start_client(token)
+                await self._start_client(
+                    token, owner_id=record.get("owner_id", config.OWNER_ID)
+                )
                 ok += 1
             except Exception as exc:
                 failed += 1
