@@ -1,3 +1,7 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
 import asyncio
 import importlib
 
@@ -90,6 +94,10 @@ async def init():
 
     await Alone.decorators()
 
+    # Restore saved clone clients after plugins and PyTgCalls event handlers are ready.
+    from FoxyMusic.core.clone_manager import init_clone_system
+    await init_clone_system()
+
     LOGGER("FoxyMusic").info(
         "Bᴏᴛ Sᴛᴀʀᴛᴇᴅ Sᴜᴄᴄᴇssғᴜʟʟʏ."
     )
@@ -103,6 +111,13 @@ async def init():
         cancel_all_uploads()
     except Exception:
         pass
+
+    # Stop dynamic clone clients cleanly before the primary bot shuts down.
+    try:
+        from FoxyMusic.core.clone_manager import shutdown_clone_system
+        await shutdown_clone_system()
+    except Exception as e:
+        LOGGER("FoxyMusic.clones").warning(f"Clone shutdown issue: {type(e).__name__}")
 
     await app.stop()
     await userbot.stop()

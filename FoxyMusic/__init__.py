@@ -1,3 +1,7 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
 from FoxyMusic.core.bot import Alone
 from FoxyMusic.core.dir import dirr
 from FoxyMusic.core.userbot import Userbot
@@ -10,6 +14,8 @@ dbb()
 heroku()
 
 app = Alone()
+from FoxyMusic.core.client_context import set_main_client
+set_main_client(app)
 userbot = Userbot()
 
 
