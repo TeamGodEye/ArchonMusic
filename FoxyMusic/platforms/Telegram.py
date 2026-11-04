@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 import os
 import time
@@ -134,7 +139,7 @@ class TeleAPI:
                             try:
                                 await mystic.edit_text(
                                     text=_["tg_1"].format(
-                                        app.mention,
+                                        get_client().mention,
                                         total_size,
                                         completed_size,
                                         percentage[:5],
@@ -149,7 +154,7 @@ class TeleAPI:
 
             speed_counter[message.id] = time.time()
             try:
-                await app.download_media(
+                await get_client().download_media(
                     message.reply_to_message,
                     file_name=fname,
                     progress=progress,
