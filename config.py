@@ -1,3 +1,7 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
 import re
 from os import getenv
 
@@ -181,3 +185,8 @@ if SUPPORT_CHAT:
         raise SystemExit(
             "[ERROR] - Your SUPPORT_CHAT url is wrong. Please ensure that it starts with https://"
         )
+
+
+# Fernet key used to encrypt cloned bot tokens in MongoDB. Generate with:
+# python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+CLONE_ENCRYPTION_KEY = getenv("CLONE_ENCRYPTION_KEY", None)

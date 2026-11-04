@@ -1,73 +1,80 @@
 {
     "name": "FoxyMusic",
     "description": "A Telegram Music Player Bot, written in Python with Kurigram and Py-TgCalls.",
-    "logo": "https://graph.org/file/3d28ab773cf25c56c6cc6-88d568f2971b65d53f.jpg",
+    "website": "https://github.com/FoxyPookie/FoxyMusic",
+    "repository": "https://github.com/FoxyPookie/FoxyMusic",
+    "logo": "https://raw.githubusercontent.com/FoxyPookie/FoxyMusic/main/logo.png",
     "keywords": [
-    "python3",
-    "telegram",
-    "bot",
-    "FoxyMusic",
-    "MusicBot",
-    "telegram-bot",
-    "kurigram"
+        "python3",
+        "telegram",
+        "bot",
+        "FoxyMusic",
+        "MusicBot",
+        "telegram-bot",
+        "kurigram"
     ],
     "env": {
-      "API_ID": {
-        "description": "Get this value from https://my.telegram.org",
-        "value": "",
-        "required": true
-      },
-      "API_HASH": {
-        "description": "Get this value from https://my.telegram.org",
-        "value": "",
-        "required": true
-      },
-      "BOT_TOKEN": {
-        "description": "A Bot's token from Botfather",
-        "value": "",
-        "required": true
-      },
-      "MONGO_DB_URI": {
-        "description": "Get a mongodb url from https://cloud.mongodb.com.",
-        "value": "",
-        "required": true
-      },
-      "OWNER_ID": {
-        "description": "The user id of user whom you would like to add as OWNER.",
-        "value": "",
-        "required": true
-      },
-      "STRING_SESSION": {
-        "description": "A Pyrogram-compatible String Session from @session_xbot on Telegram.",
-        "value": "",
-        "required": true
-      },
-      "HEROKU_API_KEY": {
-        "description": "Your Heroku account's API key",
-        "value": "",
-        "required": false
-      },
-      "HEROKU_APP_NAME": {
-        "description": "Your heroku app name",
-        "value": "",
-        "required": false
-      },
-      "LOGGER_ID": {
-        "description": "Your Log Group ID, add your bot and promote as an admin with full rights!",
-        "value": "",
-        "required": true
-      }
+        "API_ID": {
+            "description": "Get this value from https://my.telegram.org",
+            "value": "",
+            "required": true
+        },
+        "API_HASH": {
+            "description": "Get this value from https://my.telegram.org",
+            "value": "",
+            "required": true
+        },
+        "BOT_TOKEN": {
+            "description": "A Bot's token from Botfather",
+            "value": "",
+            "required": true
+        },
+        "MONGO_DB_URI": {
+            "description": "Get a mongodb url from https://cloud.mongodb.com.",
+            "value": "",
+            "required": true
+        },
+        "OWNER_ID": {
+            "description": "The user id of user whom you would like to add as OWNER.",
+            "value": "",
+            "required": true
+        },
+        "STRING_SESSION": {
+            "description": "A Pyrogram-compatible String Session from @session_xbot on Telegram.",
+            "value": "",
+            "required": true
+        },
+        "HEROKU_API_KEY": {
+            "description": "Your Heroku account's API key",
+            "value": "",
+            "required": false
+        },
+        "HEROKU_APP_NAME": {
+            "description": "Your heroku app name",
+            "value": "",
+            "required": false
+        },
+        "LOGGER_ID": {
+            "description": "Your Log Group ID, add your bot and promote as an admin with full rights!",
+            "value": "",
+            "required": true
+        },
+        "CLONE_ENCRYPTION_KEY": {
+            "description": "Fernet key for encrypting clone bot tokens. Generate with Python Fernet.generate_key(). Required to enable /clone.",
+            "value": "",
+            "required": false
+        }
     },
     "buildpacks": [
-          {
-              "url": "heroku/python"
-          },
-          {
-              "url": "heroku/nodejs"
-          },
-          {
-              "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
-          }
-      ],
-      "stack": "container"
+        {
+            "url": "heroku/python"
+        },
+        {
+            "url": "heroku/nodejs"
+        },
+        {
+            "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git"
+        }
+    ],
+    "stack": "container"
 }
