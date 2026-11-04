@@ -50,7 +50,7 @@ def private_panel(_):
         [
             InlineKeyboardButton(
                 text="ᴅєᴠєʟᴏᴘєʀ",
-                user_id=config.OWNER_ID,
+                url=f"tg://user?id={int(getattr(get_client(), 'owner_id', config.OWNER_ID))}",
                 style=ButtonStyle.SUCCESS,
                 icon_custom_emoji_id=5424632072390078052,
             ),
