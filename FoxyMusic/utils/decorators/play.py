@@ -11,7 +11,7 @@ import asyncio
 
 from pyrogram.enums import ButtonStyle, ChatMemberStatus
 from pyrogram.errors import (ChatAdminRequired, InviteRequestSent,
-                             UserAlreadyParticipant, UserNotParticipant)
+                             PeerIdInvalid, UserAlreadyParticipant, UserNotParticipant)
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 from FoxyMusic import YouTube, app
@@ -136,7 +136,7 @@ def PlayWrapper(command):
                     ChatMemberStatus.MEMBER,
                 ]:
                     raise UserNotParticipant
-            except UserNotParticipant:
+            except (UserNotParticipant, PeerIdInvalid):
                 if chat_id in links:
                     invitelink = links[chat_id]
                 else:
