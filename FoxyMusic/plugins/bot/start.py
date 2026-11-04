@@ -111,7 +111,9 @@ async def _send_start_photo_with_effect(message: Message, photo: str, caption: s
             elif button.callback_data is not None:
                 item["callback_data"] = button.callback_data
             elif button.user_id:
-                item["url"] = f"tg://user?id={button.user_id}"
+                # Bot API rejects some user-id deep links with BUTTON_USER_INVALID.
+                # Do not let this optional developer mention break the whole /start photo.
+                continue
             else:
                 continue
 
