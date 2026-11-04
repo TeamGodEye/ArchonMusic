@@ -1,3 +1,7 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
 """MongoDB-backed music cache with a private Telegram channel as cold storage.
 
 ARCHITECTURE (final, deterministic, no timer-based synchronization)

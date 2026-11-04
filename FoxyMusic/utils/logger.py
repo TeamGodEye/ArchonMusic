@@ -1,12 +1,12 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
 
+from FoxyMusic.core.client_context import get_client
 import os
 
 from pyrogram.enums import ParseMode
@@ -20,7 +20,7 @@ async def send_large_error(trace, caption, filename):
     with open(filename, "w") as f:
         f.write(trace)
     try:
-        await app.send_document(
+        await get_client().send_document(
             chat_id=LOGGER_ID,
             document=filename,
             caption=caption,
@@ -37,7 +37,7 @@ async def send_large_error(trace, caption, filename):
 async def play_logs(message, streamtype):
     if await is_on_off(2):
         logger_text = f"""<blockquote>
-<b>{app.mention} ᴘʟᴀʏ ʟᴏɢ</b>
+<b>{get_client().mention} ᴘʟᴀʏ ʟᴏɢ</b>
 
 <b>ᴄʜᴀᴛ ɪᴅ :</b> <code>{message.chat.id}</code>
 <b>ᴄʜᴀᴛ ɴᴀᴍᴇ :</b> {message.chat.title}
@@ -51,7 +51,7 @@ async def play_logs(message, streamtype):
 <b>sᴛʀᴇᴀᴍᴛʏᴘᴇ :</b> {streamtype}</blockquote>"""
         if message.chat.id != LOGGER_ID:
             try:
-                await app.send_message(
+                await get_client().send_message(
                     chat_id=LOGGER_ID,
                     text=logger_text,
                     parse_mode=ParseMode.HTML,

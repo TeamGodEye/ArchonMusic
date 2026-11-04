@@ -1,11 +1,12 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
 
+from FoxyMusic.core.client_context import get_client
 import os
 import sys
 import traceback
@@ -30,7 +31,7 @@ async def send_large_error(text: str, caption: str, filename: str):
     try:
         paste_url = await AloneBin(text)
         if paste_url:
-            await app.send_message(LOGGER_ID, f"{caption}\n\n🔗 Paste: {paste_url}")
+            await get_client().send_message(LOGGER_ID, f"{caption}\n\n🔗 Paste: {paste_url}")
             return
     except Exception:
         pass
@@ -38,7 +39,7 @@ async def send_large_error(text: str, caption: str, filename: str):
     path = f"{filename}.txt"
     async with aiofiles.open(path, "w") as f:
         await f.write(text)
-    await app.send_document(LOGGER_ID, path, caption="❌ Error Log (Fallback)")
+    await get_client().send_document(LOGGER_ID, path, caption="❌ Error Log (Fallback)")
     os.remove(path)
 
 
@@ -66,7 +67,7 @@ async def handle_trace(err, tb, label, filename, extras=None):
     if len(caption) > 4096:
         await send_large_error(tb, caption.split("\n\n")[0], filename)
     else:
-        await app.send_message(LOGGER_ID, caption)
+        await get_client().send_message(LOGGER_ID, caption)
 
 
 async def log_ignored_error(err, tb, label, extras=None):
@@ -100,7 +101,7 @@ def capture_err(func):
         try:
             return await func(client, message, *args, **kwargs)
         except ChatWriteForbidden:
-            await app.leave_chat(message.chat.id)
+            await get_client().leave_chat(message.chat.id)
         except Exception as err:
             tb = "".join(traceback.format_exception(*sys.exc_info()))
             extras = {

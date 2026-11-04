@@ -1,3 +1,7 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
 """Safe file lifecycle reference counting.
 
 Simple deterministic model:
