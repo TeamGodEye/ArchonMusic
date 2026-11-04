@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -76,7 +81,7 @@ async def authusers(client, message: Message, _):
             admin_id = _umm["admin_id"]
             admin_name = _umm["admin_name"]
             try:
-                user = (await app.get_users(user_id)).first_name
+                user = (await get_client().get_users(user_id)).first_name
                 j += 1
             except:
                 continue

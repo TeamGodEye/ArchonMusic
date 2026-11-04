@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -31,7 +36,7 @@ async def playback(cli, message: Message, _, chat_id):
         return await message.reply_text(_["admin_27"])
     upl = speed_markup(_, chat_id)
     return await message.reply_text(
-        text=_["admin_28"].format(app.mention),
+        text=_["admin_28"].format(get_client().mention),
         reply_markup=upl,
     )
 

@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 #from pyrogram.types import Message
 from pyrogram.types import Message, CallbackQuery
@@ -91,7 +96,7 @@ async def check_callback_admin(client, callback_query: CallbackQuery):
     
     try:
         chat_id = callback_query.message.chat.id
-        member = await app.get_chat_member(chat_id, callback_query.from_user.id)
+        member = await get_client().get_chat_member(chat_id, callback_query.from_user.id)
         if member.privileges and member.privileges.can_manage_video_chats:
             return True
     except Exception as e:

@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, Message
 
@@ -201,7 +206,7 @@ async def skip(cli, message: Message, _, chat_id):
         )
         img = await get_thumb(videoid)
         caption = _["stream_1"].format(
-            f"https://t.me/{app.username}?start=info_{videoid}",
+            f"https://t.me/{get_client().username}?start=info_{videoid}",
             title[:23],
             check[0]["dur"],
             user,
@@ -242,7 +247,7 @@ async def skip(cli, message: Message, _, chat_id):
         )
         img = await get_thumb(videoid)
         caption = _["stream_1"].format(
-            f"https://t.me/{app.username}?start=info_{videoid}",
+            f"https://t.me/{get_client().username}?start=info_{videoid}",
             title[:23],
             check[0]["dur"],
             user,
@@ -303,7 +308,7 @@ async def skip(cli, message: Message, _, chat_id):
             )
             img = await get_thumb(videoid)
             caption = _["stream_1"].format(
-                f"https://t.me/{app.username}?start=info_{videoid}",
+                f"https://t.me/{get_client().username}?start=info_{videoid}",
                 title[:23],
                 check[0]["dur"],
                 user,

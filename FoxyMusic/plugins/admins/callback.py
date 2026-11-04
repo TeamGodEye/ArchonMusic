@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 
 from pyrogram import filters
@@ -420,7 +425,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                     photo=img,
                     has_spoiler=True,
                     caption=_["stream_1"].format(
-                        f"https://t.me/{app.username}?start=info_{videoid}",
+                        f"https://t.me/{get_client().username}?start=info_{videoid}",
                         title[:23],
                         duration,
                         user,
@@ -430,7 +435,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             else:
                 run = await CallbackQuery.message.reply_text(
                     text=_["stream_1"].format(
-                        f"https://t.me/{app.username}?start=info_{videoid}",
+                        f"https://t.me/{get_client().username}?start=info_{videoid}",
                         title[:23],
                         duration,
                         user,
@@ -470,7 +475,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                     photo=img,
                     has_spoiler=True,
                     caption=_["stream_1"].format(
-                        f"https://t.me/{app.username}?start=info_{videoid}",
+                        f"https://t.me/{get_client().username}?start=info_{videoid}",
                         title[:23],
                         duration,
                         user,
@@ -480,7 +485,7 @@ async def del_back_playlist(client, CallbackQuery, _):
             else:
                 run = await CallbackQuery.message.reply_text(
                     text=_["stream_1"].format(
-                        f"https://t.me/{app.username}?start=info_{videoid}",
+                        f"https://t.me/{get_client().username}?start=info_{videoid}",
                         title[:23],
                         duration,
                         user,
@@ -586,7 +591,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                         photo=img,
                         has_spoiler=True,
                         caption=_["stream_1"].format(
-                            f"https://t.me/{app.username}?start=info_{videoid}",
+                            f"https://t.me/{get_client().username}?start=info_{videoid}",
                             title[:23],
                             duration,
                             user,
@@ -596,7 +601,7 @@ async def del_back_playlist(client, CallbackQuery, _):
                 else:
                     run = await CallbackQuery.message.reply_text(
                         text=_["stream_1"].format(
-                            f"https://t.me/{app.username}?start=info_{videoid}",
+                            f"https://t.me/{get_client().username}?start=info_{videoid}",
                             title[:23],
                             duration,
                             user,
