@@ -1,6 +1,10 @@
 # ─────「 𝐅ᴏxʏ 」─────
 #    Official Project Source
 # ────────────────────────
+# Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
+# and is released under the "GNU v3.0 License Agreement".
+# Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
+# All rights reserved.
 
 from FoxyMusic.core.client_context import get_client
 from typing import Union
@@ -27,8 +31,14 @@ def help_pannel(_, START: Union[bool, int] = None):
         ),
     ]
     mark = second if START else first
-    upl = InlineKeyboardMarkup(
-        [
+    clone_row = [
+        InlineKeyboardButton(
+            text="CLONE",
+            callback_data="help_callback hb13",
+            style=ButtonStyle.PRIMARY,
+        ),
+    ]
+    rows = [
             [
                 InlineKeyboardButton(
                     text=_["H_B_1"],
@@ -97,16 +107,10 @@ def help_pannel(_, START: Union[bool, int] = None):
                     style=ButtonStyle.PRIMARY,
                 ),
             ],
-            [
-                InlineKeyboardButton(
-                    text="Cʟᴏɴє",
-                    callback_data="help_callback hb13",
-                    style=ButtonStyle.SUCCESS,
-                ),
-            ],
+            clone_row,
             mark,
-        ]
-    )
+    ]
+    upl = InlineKeyboardMarkup(rows)
     return upl
 
 
