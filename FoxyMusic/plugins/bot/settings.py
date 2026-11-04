@@ -146,7 +146,7 @@ async def support(client, CallbackQuery, _):
                 [
                     InlineKeyboardButton(
                         text="⌯ ᴏᴡɴᴇʀ ⌯",
-                        user_id=config.OWNER_ID,
+                        user_id=int(getattr(get_client(), "owner_id", config.OWNER_ID)),
                         style=ButtonStyle.SUCCESS,
                         icon_custom_emoji_id=6237864166879663987,
                     )
@@ -172,7 +172,6 @@ async def settings_back_markup(client, CallbackQuery: CallbackQuery, _):
     except:
         pass
     if CallbackQuery.message.chat.type == ChatType.PRIVATE:
-        await get_client().resolve_peer(OWNER_ID)
         buttons = private_panel(_)
         return await CallbackQuery.edit_message_text(
             _["start_2"].format(CallbackQuery.from_user.mention, get_client().mention),
