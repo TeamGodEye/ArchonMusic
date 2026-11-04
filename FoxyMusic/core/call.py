@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 import os
 import random
@@ -11,6 +16,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pytgcalls import PyTgCalls, exceptions, types
 import config
 from FoxyMusic import LOGGER, YouTube, app
+from FoxyMusic.core.client_context import client_context, client_for_chat
 from FoxyMusic.misc import db
 from FoxyMusic.utils.database import (add_active_chat, add_active_video_chat,
                                        autoplay_off, get_filter, get_lang, get_loop,
@@ -520,7 +526,7 @@ class Call(PyTgCalls):
                                     [
                                         InlineKeyboardButton(
                                             "✙ ʌᴅᴅ ϻє вᴧʙʏ ✙",
-                                            url=f"https://t.me/{app.username}?startgroup=true",
+                                            url=f"https://t.me/{get_client().username}?startgroup=true",
                                             style=ButtonStyle.PRIMARY,
                                         ),
                                     ],
@@ -533,7 +539,7 @@ class Call(PyTgCalls):
                                     ]
                                 ]
                             )
-                            await app.send_message(
+                            await get_client().send_message(
                                 chat_id,
                                 "🎵 𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs!!",
                                 reply_markup=buttons,
@@ -550,7 +556,7 @@ class Call(PyTgCalls):
                             [
                                 InlineKeyboardButton(
                                     "✙ ʌᴅᴅ ϻє вᴧʙʏ ✙",
-                                    url=f"https://t.me/{app.username}?startgroup=true",
+                                    url=f"https://t.me/{get_client().username}?startgroup=true",
                                     style=ButtonStyle.PRIMARY,
                                 ),
                             ],
@@ -563,7 +569,7 @@ class Call(PyTgCalls):
                             ]
                         ]
                     )
-                    await app.send_message(
+                    await get_client().send_message(
                         chat_id,
                         "🎵 𝐓ʜᴇ 𝐐ᴜᴇᴜᴇ 𝐇ᴀs 𝐅ɪɴɪsʜᴇᴅ. 𝐔sᴇ /play 𝐓ᴏ 𝐀ᴅᴅ 𝐌ᴏʀᴇ 𝐒ᴏɴɢs!!",
                         reply_markup=buttons,
@@ -617,7 +623,7 @@ class Call(PyTgCalls):
                 # Either the resolver returned 0 results, or it returned a
                 # result but with no playable URL (link is None/empty).
                 # Treat both as a failed switch and notify the user.
-                return await app.send_message(
+                return await get_client().send_message(
                     original_chat_id,
                     text=_["call_6"],
                 )
@@ -625,7 +631,7 @@ class Call(PyTgCalls):
             try:
                 await self._play_on_assistant(client, chat_id, stream)
             except Exception:
-                return await app.send_message(
+                return await get_client().send_message(
                     original_chat_id,
                     text=_["call_6"],
                 )
@@ -634,7 +640,7 @@ class Call(PyTgCalls):
                 _, chat_id, await is_autoplay_on(chat_id), await is_thumb_on(chat_id), await get_filter(chat_id)
             )
             caption=_["stream_1"].format(
-                f"https://t.me/{app.username}?start=info_{videoid}",
+                f"https://t.me/{get_client().username}?start=info_{videoid}",
                 title[:23],
                 check[0]["dur"],
                 user,
@@ -704,7 +710,7 @@ class Call(PyTgCalls):
             try:
                 await self._play_on_assistant(client, chat_id, stream)
             except Exception:
-                return await app.send_message(
+                return await get_client().send_message(
                     original_chat_id,
                     text=_["call_6"],
                 )
@@ -713,7 +719,7 @@ class Call(PyTgCalls):
                 _, chat_id, await is_autoplay_on(chat_id), await is_thumb_on(chat_id), await get_filter(chat_id)
             )
             caption=_["stream_1"].format(
-                f"https://t.me/{app.username}?start=info_{videoid}",
+                f"https://t.me/{get_client().username}?start=info_{videoid}",
                 title[:23],
                 check[0]["dur"],
                 user,
@@ -729,7 +735,7 @@ class Call(PyTgCalls):
             try:
                 await self._play_on_assistant(client, chat_id, stream)
             except Exception:
-                return await app.send_message(
+                return await get_client().send_message(
                     original_chat_id,
                     text=_["call_6"],
                 )
@@ -747,7 +753,7 @@ class Call(PyTgCalls):
             try:
                 await self._play_on_assistant(client, chat_id, stream)
             except Exception:
-                return await app.send_message(
+                return await get_client().send_message(
                     original_chat_id,
                     text=_["call_6"],
                 )
@@ -782,7 +788,7 @@ class Call(PyTgCalls):
                     _, chat_id, await is_autoplay_on(chat_id), await is_thumb_on(chat_id), await get_filter(chat_id)
                 )
                 caption=_["stream_1"].format(
-                    f"https://t.me/{app.username}?start=info_{videoid}",
+                    f"https://t.me/{get_client().username}?start=info_{videoid}",
                     title[:23],
                     check[0]["dur"],
                     user,
@@ -858,16 +864,21 @@ class Call(PyTgCalls):
 
             @client.on_update()
             async def _update_handler(_, update: types.Update, _client=client):
-                if isinstance(update, types.StreamEnded):
-                    if update.stream_type == types.StreamEnded.Type.AUDIO:
-                        await self.change_stream(_client, update.chat_id)
-                elif isinstance(update, types.ChatUpdate):
-                    if update.status in [
-                        types.ChatUpdate.Status.KICKED,
-                        types.ChatUpdate.Status.LEFT_GROUP,
-                        types.ChatUpdate.Status.CLOSED_VOICE_CHAT,
-                    ]:
-                        await self.stop_stream(update.chat_id)
+                # PyTgCalls updates arrive outside the bot-message handler context.
+                # Route follow-up UI to whichever bot last handled this chat.
+                chat_id = getattr(update, "chat_id", None)
+                routed_client = client_for_chat(chat_id)
+                with client_context(routed_client, chat_id):
+                    if isinstance(update, types.StreamEnded):
+                        if update.stream_type == types.StreamEnded.Type.AUDIO:
+                            await self.change_stream(_client, update.chat_id)
+                    elif isinstance(update, types.ChatUpdate):
+                        if update.status in [
+                            types.ChatUpdate.Status.KICKED,
+                            types.ChatUpdate.Status.LEFT_GROUP,
+                            types.ChatUpdate.Status.CLOSED_VOICE_CHAT,
+                        ]:
+                            await self.stop_stream(update.chat_id)
 
 
 Alone = Call()
