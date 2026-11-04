@@ -1,3 +1,7 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
 import glob
 from os.path import dirname, isfile
 
