@@ -1,12 +1,12 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
 
+from FoxyMusic.core.client_context import get_client
 import asyncio
 import os
 
@@ -57,7 +57,7 @@ async def get_queue(client, message: Message, _):
         if chat_id is None:
             return await message.reply_text(_["setting_7"])
         try:
-            await app.get_chat(chat_id)
+            await get_client().get_chat(chat_id)
         except:
             return await message.reply_text(_["cplay_4"])
         cplay = True
@@ -93,7 +93,7 @@ async def get_queue(client, message: Message, _):
         else:
             IMAGE = get_image(videoid)
     send = _["queue_6"] if DUR == "Unknown" else _["queue_7"]
-    cap = _["queue_8"].format(app.mention, title, typo, user, send)
+    cap = _["queue_8"].format(get_client().mention, title, typo, user, send)
     upl = (
         queue_markup(_, DUR, "c" if cplay else "g", videoid)
         if DUR == "Unknown"
@@ -233,7 +233,7 @@ async def queue_back(client, CallbackQuery: CallbackQuery, _):
         else:
             IMAGE = get_image(videoid)
     send = _["queue_6"] if DUR == "Unknown" else _["queue_7"]
-    cap = _["queue_8"].format(app.mention, title, typo, user, send)
+    cap = _["queue_8"].format(get_client().mention, title, typo, user, send)
     upl = (
         queue_markup(_, DUR, cplay, videoid)
         if DUR == "Unknown"

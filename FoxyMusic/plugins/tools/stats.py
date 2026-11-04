@@ -1,12 +1,12 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
 
+from FoxyMusic.core.client_context import get_client
 import platform
 from sys import version as pyver
 
@@ -35,7 +35,7 @@ async def stats_global(client, message: Message, _):
     upl = stats_buttons(_, True if message.from_user.id in SUDOERS else False)
     await message.reply_photo(
         photo=config.STATS_IMG_URL,
-        caption=_["gstats_2"].format(app.mention),
+        caption=_["gstats_2"].format(get_client().mention),
         reply_markup=upl,
     )
 
@@ -45,7 +45,7 @@ async def stats_global(client, message: Message, _):
 async def home_stats(client, CallbackQuery, _):
     upl = stats_buttons(_, True if CallbackQuery.from_user.id in SUDOERS else False)
     await CallbackQuery.edit_message_text(
-        text=_["gstats_2"].format(app.mention),
+        text=_["gstats_2"].format(get_client().mention),
         reply_markup=upl,
     )
 
@@ -59,11 +59,11 @@ async def overall_stats(client, CallbackQuery, _):
         await CallbackQuery.answer()
     except:
         pass
-    await CallbackQuery.edit_message_text(_["gstats_1"].format(app.mention))
+    await CallbackQuery.edit_message_text(_["gstats_1"].format(get_client().mention))
     served_chats = len(await get_served_chats())
     served_users = len(await get_served_users())
     text = _["gstats_3"].format(
-        app.mention,
+        get_client().mention,
         len(assistants),
         len(BANNED_USERS),
         served_chats,
@@ -92,7 +92,7 @@ async def bot_stats(client, CallbackQuery, _):
         await CallbackQuery.answer()
     except:
         pass
-    await CallbackQuery.edit_message_text(_["gstats_1"].format(app.mention))
+    await CallbackQuery.edit_message_text(_["gstats_1"].format(get_client().mention))
     p_core = psutil.cpu_count(logical=False)
     t_core = psutil.cpu_count(logical=True)
     ram = str(round(psutil.virtual_memory().total / (1024.0**3))) + " ɢʙ"
@@ -114,7 +114,7 @@ async def bot_stats(client, CallbackQuery, _):
     served_chats = len(await get_served_chats())
     served_users = len(await get_served_users())
     text = _["gstats_5"].format(
-        app.mention,
+        get_client().mention,
         len(ALL_MODULES),
         platform.system(),
         ram,

@@ -1,12 +1,12 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
 
+from FoxyMusic.core.client_context import get_client
 """Welcome system — adapted from the autoplaysty reference repository.
 
 This module implements the complete welcome feature:
@@ -666,10 +666,10 @@ async def greet_new_member(client, member: ChatMemberUpdated):
 # that Telegram sends when members join.
 #
 # group=-5 is lower than start.py's group=-1. The start.py handler calls
-# message.stop_propagation() only when `member.id == app.id`, so for
+# message.stop_propagation() only when `member.id == get_client().id`, so for
 # regular user joins, start.py doesn't stop propagation — but it's in
 # group=-1 which runs *after* this handler in group=-5. Either way, this
-# handler explicitly skips `member.id == app.id` to avoid double-handling.
+# handler explicitly skips `member.id == get_client().id` to avoid double-handling.
 #
 # Note: Pyrogram fires handlers in ascending group order, so group=-5
 # runs *before* group=-1. This is fine — we don't call stop_propagation,
@@ -680,7 +680,7 @@ async def greet_new_member(client, member: ChatMemberUpdated):
 async def welcome_backup(client, message: Message):
     for new_user in message.new_chat_members:
         # Skip the bot itself (handled by start.py + logs.py)
-        if new_user.id == app.id:
+        if new_user.id == get_client().id:
             continue
 
         chat_id = message.chat.id

@@ -1,12 +1,12 @@
-#
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
 # Copyright (C) 2021-2022 by Yuki77394@Github, < https://github.com/yuki77394 >.
-#
-# This file is part of < https://github.com/Yuki77394/FoxyMusic > project,
 # and is released under the "GNU v3.0 License Agreement".
 # Please see < https://github.com/Yuki77394/FoxyMusic/blob/master/LICENSE >
-#
 # All rights reserved.
 
+from FoxyMusic.core.client_context import get_client
 import asyncio
 import time
 
@@ -40,7 +40,7 @@ async def reload_admin_cache(client, message: Message, _):
                 left = get_readable_time((int(saved) - int(time.time())))
                 return await message.reply_text(_["reload_1"].format(left))
         adminlist[message.chat.id] = []
-        async for user in app.get_chat_members(
+        async for user in get_client().get_chat_members(
             message.chat.id, filter=ChatMembersFilter.ADMINISTRATORS
         ):
             if user.privileges.can_manage_video_chats:
@@ -59,7 +59,7 @@ async def reload_admin_cache(client, message: Message, _):
 @app.on_message(filters.command(["reboot"]) & filters.group & ~BANNED_USERS)
 @AdminActual
 async def restartbot(client, message: Message, _):
-    mystic = await message.reply_text(_["reload_4"].format(app.mention))
+    mystic = await message.reply_text(_["reload_4"].format(get_client().mention))
     await asyncio.sleep(1)
     try:
         db[message.chat.id] = []
@@ -77,7 +77,7 @@ async def restartbot(client, message: Message, _):
     chat_id = await get_cmode(message.chat.id)
     if chat_id:
         try:
-            got = await app.get_chat(chat_id)
+            got = await get_client().get_chat(chat_id)
         except:
             pass
         userbot = await get_assistant(chat_id)
@@ -93,7 +93,7 @@ async def restartbot(client, message: Message, _):
             await Alone.stop_stream_force(chat_id)
         except:
             pass
-    return await mystic.edit_text(_["reload_5"].format(app.mention))
+    return await mystic.edit_text(_["reload_5"].format(get_client().mention))
 
 
 @app.on_callback_query(filters.regex("close") & ~BANNED_USERS)

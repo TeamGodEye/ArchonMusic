@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 from pyrogram.types import Message
 from unidecode import unidecode
@@ -27,13 +32,13 @@ async def activevc(_, message: Message):
     j = 0
     for x in served_chats:
         try:
-            title = (await app.get_chat(x)).title
+            title = (await get_client().get_chat(x)).title
         except:
             await remove_active_chat(x)
             continue
         try:
-            if (await app.get_chat(x)).username:
-                user = (await app.get_chat(x)).username
+            if (await get_client().get_chat(x)).username:
+                user = (await get_client().get_chat(x)).username
                 text += f"<b>{j + 1}.</b> <a href=https://t.me/{user}>{unidecode(title).upper()}</a> [<code>{x}</code>]\n"
             else:
                 text += (
@@ -43,7 +48,7 @@ async def activevc(_, message: Message):
         except:
             continue
     if not text:
-        await mystic.edit_text(f"» ɴᴏ ᴀᴄᴛɪᴠᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛs ᴏɴ {app.mention}.")
+        await mystic.edit_text(f"» ɴᴏ ᴀᴄᴛɪᴠᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛs ᴏɴ {get_client().mention}.")
     else:
         await mystic.edit_text(
             f"<b>» ʟɪsᴛ ᴏғ ᴄᴜʀʀᴇɴᴛʟʏ ᴀᴄᴛɪᴠᴇ ᴠᴏɪᴄᴇ ᴄʜᴀᴛs :</b>\n\n{text}",
@@ -59,13 +64,13 @@ async def activevi_(_, message: Message):
     j = 0
     for x in served_chats:
         try:
-            title = (await app.get_chat(x)).title
+            title = (await get_client().get_chat(x)).title
         except:
             await remove_active_video_chat(x)
             continue
         try:
-            if (await app.get_chat(x)).username:
-                user = (await app.get_chat(x)).username
+            if (await get_client().get_chat(x)).username:
+                user = (await get_client().get_chat(x)).username
                 text += f"<b>{j + 1}.</b> <a href=https://t.me/{user}>{unidecode(title).upper()}</a> [<code>{x}</code>]\n"
             else:
                 text += (
@@ -75,7 +80,7 @@ async def activevi_(_, message: Message):
         except:
             continue
     if not text:
-        await mystic.edit_text(f"» ɴᴏ ᴀᴄᴛɪᴠᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛs ᴏɴ {app.mention}.")
+        await mystic.edit_text(f"» ɴᴏ ᴀᴄᴛɪᴠᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛs ᴏɴ {get_client().mention}.")
     else:
         await mystic.edit_text(
             f"<b>» ʟɪsᴛ ᴏғ ᴄᴜʀʀᴇɴᴛʟʏ ᴀᴄᴛɪᴠᴇ ᴠɪᴅᴇᴏ ᴄʜᴀᴛs :</b>\n\n{text}",
