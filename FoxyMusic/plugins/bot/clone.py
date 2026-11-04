@@ -17,6 +17,22 @@ from config import BANNED_USERS
 
 @app.on_message(filters.command(["clone"]) & ~BANNED_USERS)
 async def clone_command(client, message: Message):
+    # Clone bots must never create nested clones. Keep this check inside the
+    # command handler as a server-side guard, not merely a hidden Help button.
+    if getattr(client, "owner_id", None):
+        main_username = getattr(app, "username", None)
+        if not main_username:
+            try:
+                main_me = await app.get_me()
+                main_username = main_me.username
+            except Exception:
+                main_username = None
+        main_link = f"@{main_username}" if main_username else "the main bot"
+        return await message.reply_text(
+            "ʏᴏᴜ ᴄᴀɴ'ᴛ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ɪɴ ᴄʟᴏɴᴇ ʙᴏᴛs. ❤️\n"
+            f"ᴘʟᴇᴀsᴇ ᴜsᴇ ᴍᴀɪɴ ʙᴏᴛ {main_link} ᴛᴏ ᴄʀᴇᴀᴛᴇ ᴀ ᴄʟᴏɴᴇ."
+        )
+
     args = message.command[1:]
     if not args:
         if not clone_manager.enabled:

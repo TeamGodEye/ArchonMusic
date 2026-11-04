@@ -93,4 +93,17 @@ async def helper_cb(client, CallbackQuery, _):
     elif cb == "hb12":
         await CallbackQuery.edit_message_text(helpers.HELP_12, reply_markup=keyboard)
     elif cb == "hb13":
-        await CallbackQuery.edit_message_text(helpers.HELP_CLONE, reply_markup=keyboard)
+        if getattr(client, "owner_id", None):
+            await CallbackQuery.edit_message_text(
+                "<b>๏ /clone</b> - ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ ᴏɴ ᴛʜᴇ ᴍᴀɪɴ ʙᴏᴛ ᴛᴏ ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ᴏᴡɴ ᴄʟᴏɴᴇ.",
+                reply_markup=keyboard,
+            )
+        else:
+            await CallbackQuery.edit_message_text(
+                "<b><u>❖ ᴄʟᴏɴᴇ ʜᴇʟᴘ :</u></b>\n\n"
+                "๏ /clone - ᴄʀᴇᴀᴛᴇ ʏᴏᴜʀ ᴏᴡɴ ғᴏxʏᴍᴜsɪᴄ ᴄʟᴏɴᴇ.\n"
+                "๏ /clones - ᴠɪᴇᴡ ʏᴏᴜʀ ᴄʟᴏɴᴇs.\n"
+                "๏ /unclone - ʀᴇᴍᴏᴠᴇ ᴀ ᴄʟᴏɴᴇ.\n\n"
+                "⚠️ ɴᴇᴠᴇʀ sʜᴀʀᴇ ʏᴏᴜʀ ʙᴏᴛ ᴛᴏᴋᴇɴ.",
+                reply_markup=keyboard,
+            )
