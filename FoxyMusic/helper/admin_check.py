@@ -1,3 +1,7 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
 from pyrogram.types import Message
 from pyrogram import filters
 from pyrogram.enums import ChatType, ChatMemberStatus
