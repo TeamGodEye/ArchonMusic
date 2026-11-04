@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 import re
 import time
@@ -58,7 +63,7 @@ def _parse_delay(value: str):
 async def _bot_can_delete(chat_id: int) -> bool:
     """Return whether the bot has permission to delete channel posts."""
     try:
-        member = await app.get_chat_member(chat_id, app.id)
+        member = await get_client().get_chat_member(chat_id, get_client().id)
         if member.status == ChatMemberStatus.OWNER:
             return True
         privileges = member.privileges
@@ -117,7 +122,7 @@ async def _delete_worker():
                 attempts = int(job.get("attempts", 0))
 
                 try:
-                    await app.delete_messages(chat_id, message_id)
+                    await get_client().delete_messages(chat_id, message_id)
 
                     # Success: remove the temporary job immediately.
                     with suppress(Exception):
@@ -399,7 +404,7 @@ async def autodelete_new_channel_post(_, message: Message):
             gap = int(setting["gap"])
             if not await _gap_allows_post(message.chat.id, now, gap):
                 with suppress(Exception):
-                    await app.delete_messages(message.chat.id, message.id)
+                    await get_client().delete_messages(message.chat.id, message.id)
                 return
 
         # DELAY: every allowed normal post is queued for later deletion.

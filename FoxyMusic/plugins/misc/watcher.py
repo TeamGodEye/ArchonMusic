@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -17,7 +22,7 @@ async def welcome(_, message: Message):
 
 @app.on_message(filters.left_chat_member, group=69)
 async def bot_kick(_, msg: Message):
-    if msg.left_chat_member.id == app.id:
+    if msg.left_chat_member.id == get_client().id:
         ub = await get_assistant(msg.chat.id)
         try:
             await ub.leave_chat(msg.chat.id)

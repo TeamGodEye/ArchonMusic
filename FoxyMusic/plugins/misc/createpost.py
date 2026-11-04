@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 import random
 import re
@@ -283,9 +288,9 @@ async def _send_hidden_preview(
         if converted is not None:
             raw_entities.append(converted)
 
-    peer = await app.resolve_peer(chat_id)
+    peer = await get_client().resolve_peer(chat_id)
 
-    return await app.invoke(
+    return await get_client().invoke(
         raw.functions.messages.SendMessage(
             peer=peer,
             no_webpage=False,
@@ -300,8 +305,8 @@ async def _send_hidden_preview(
 async def _bot_admin_status(chat_id: int):
     """Check that the bot can access the target chat and can post."""
     try:
-        chat = await app.get_chat(chat_id)
-        member = await app.get_chat_member(chat_id, app.id)
+        chat = await get_client().get_chat(chat_id)
+        member = await get_client().get_chat_member(chat_id, get_client().id)
     except Exception as exc:
         return (
             False,
@@ -613,7 +618,7 @@ async def createpost_input(_, message: Message):
             target_user_id = int(raw)
             if target_user_id <= 0:
                 raise ValueError
-            target_user = await app.get_users(target_user_id)
+            target_user = await get_client().get_users(target_user_id)
         except ValueError:
             return await message.reply_text(
                 "❌ <b>Invalid User ID.</b>\n\nSend a valid numeric Telegram User ID."
@@ -691,7 +696,7 @@ async def createpost_input(_, message: Message):
                 [[InlineKeyboardButton(**button_kwargs)]]
             )
 
-            await app.send_photo(
+            await get_client().send_photo(
                 chat_id=session["chat_id"],
                 photo=session["photo"],
                 caption=caption,

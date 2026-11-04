@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 
 from pyrogram import filters
@@ -55,14 +60,14 @@ async def braodcast_message(client, message, _):
         for i in chats:
             try:
                 if message.reply_to_message:
-                    m = await app.copy_message(
+                    m = await get_client().copy_message(
                         chat_id=i,
                         from_chat_id=y,
                         message_id=x,
                         reply_markup=message.reply_to_message.reply_markup,
                     )
                 else:
-                    m = await app.send_message(i, text=query)
+                    m = await get_client().send_message(i, text=query)
                 if "-pin" in message.text:
                     try:
                         await m.pin(disable_notification=True)
@@ -101,14 +106,14 @@ async def braodcast_message(client, message, _):
         for i in served_users:
             try:
                 if message.reply_to_message:
-                    await app.copy_message(
+                    await get_client().copy_message(
                         chat_id=i,
                         from_chat_id=y,
                         message_id=x,
                         reply_markup=message.reply_to_message.reply_markup,
                     )
                 else:
-                    await app.send_message(i, text=query)
+                    await get_client().send_message(i, text=query)
                 susr += 1
                 await asyncio.sleep(0.1)
             except FloodWait as e:
@@ -166,7 +171,7 @@ async def auto_clean():
             for chat_id in served_chats:
                 if chat_id not in adminlist:
                     adminlist[chat_id] = []
-                    async for user in app.get_chat_members(
+                    async for user in get_client().get_chat_members(
                         chat_id, filter=ChatMembersFilter.ADMINISTRATORS
                     ):
                         if user.privileges.can_manage_video_chats:

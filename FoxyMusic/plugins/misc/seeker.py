@@ -1,3 +1,7 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
 import asyncio
 
 from FoxyMusic.misc import db

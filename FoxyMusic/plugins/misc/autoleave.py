@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 from datetime import datetime
 
@@ -64,7 +69,7 @@ async def auto_end():
                 except:
                     continue
                 try:
-                    await app.send_message(
+                    await get_client().send_message(
                         chat_id,
                         "» ʙᴏᴛ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ʟᴇғᴛ ᴠɪᴅᴇᴏᴄʜᴀᴛ ʙᴇᴄᴀᴜsᴇ ɴᴏ ᴏɴᴇ ᴡᴀs ʟɪsᴛᴇɴɪɴɢ ᴏɴ ᴠɪᴅᴇᴏᴄʜᴀᴛ.",
                     )

@@ -1,3 +1,7 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
 from contextlib import suppress
 
 from pyrogram import filters
