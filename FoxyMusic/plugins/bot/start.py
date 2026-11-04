@@ -136,7 +136,6 @@ async def _send_start_photo_with_effect(message: Message, photo: str, caption: s
         "has_spoiler": True,
         "message_effect_id": str(CELEBRATION_EFFECT_ID),
         "reply_markup": json.dumps({"inline_keyboard": keyboard}),
-        "reply_parameters": json.dumps({"message_id": message.id}),
     }
 
     url = f"https://api.telegram.org/bot{config.BOT_TOKEN}/sendPhoto"
