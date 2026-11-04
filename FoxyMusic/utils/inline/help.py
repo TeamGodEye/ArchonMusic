@@ -101,6 +101,13 @@ def help_pannel(_, START: Union[bool, int] = None):
                     style=ButtonStyle.PRIMARY,
                 ),
             ],
+            [
+                InlineKeyboardButton(
+                    text="CLONE",
+                    callback_data="help_callback hb13",
+                    style=ButtonStyle.PRIMARY,
+                ),
+            ],
             mark,
         ]
     )
