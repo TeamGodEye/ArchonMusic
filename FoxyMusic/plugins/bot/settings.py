@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from time import time
 
 from pyrogram import filters
@@ -33,7 +38,7 @@ from config import BANNED_USERS, OWNER_ID
 async def settings_mar(client, message: Message, _):
     buttons = setting_markup(_)
     await message.reply_text(
-        _["setting_1"].format(app.mention, message.chat.id, message.chat.title),
+        _["setting_1"].format(get_client().mention, message.chat.id, message.chat.title),
         reply_markup=InlineKeyboardMarkup(buttons),
     )
 
@@ -94,7 +99,7 @@ async def settings_cb(client, CallbackQuery, _):
     buttons = setting_markup(_)
     return await CallbackQuery.edit_message_text(
         _["setting_1"].format(
-            app.mention,
+            get_client().mention,
             CallbackQuery.message.chat.id,
             CallbackQuery.message.chat.title,
         ),
@@ -167,10 +172,10 @@ async def settings_back_markup(client, CallbackQuery: CallbackQuery, _):
     except:
         pass
     if CallbackQuery.message.chat.type == ChatType.PRIVATE:
-        await app.resolve_peer(OWNER_ID)
+        await get_client().resolve_peer(OWNER_ID)
         buttons = private_panel(_)
         return await CallbackQuery.edit_message_text(
-            _["start_2"].format(CallbackQuery.from_user.mention, app.mention),
+            _["start_2"].format(CallbackQuery.from_user.mention, get_client().mention),
             reply_markup=InlineKeyboardMarkup(buttons),
         )
     else:
@@ -420,7 +425,7 @@ async def authusers_mar(client, CallbackQuery, _):
                 admin_id = _note["admin_id"]
                 admin_name = _note["admin_name"]
                 try:
-                    user = await app.get_users(user_id)
+                    user = await get_client().get_users(user_id)
                     user = user.first_name
                     j += 1
                 except:

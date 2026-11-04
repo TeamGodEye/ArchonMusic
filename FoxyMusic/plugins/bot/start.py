@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 import html
 import json
@@ -162,7 +167,7 @@ async def start_pm(client, message: Message, _):
         if name[0:3] == "sud":
             await sudoers_list(client=client, message=message, _=_)
             if await is_on_off(2):
-                return await app.send_message(
+                return await get_client().send_message(
                     chat_id=config.LOGGER_ID,
                     text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>sᴜᴅᴏʟɪsᴛ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
@@ -182,7 +187,7 @@ async def start_pm(client, message: Message, _):
                 link = result["link"]
                 published = result["publishedTime"]
             searched_text = _["start_6"].format(
-                title, duration, views, published, channellink, channel, app.mention
+                title, duration, views, published, channellink, channel, get_client().mention
             )
             key = InlineKeyboardMarkup(
                 [
@@ -201,7 +206,7 @@ async def start_pm(client, message: Message, _):
                 ]
             )
             await m.delete()
-            await app.send_photo(
+            await get_client().send_photo(
                 chat_id=message.chat.id,
                 photo=thumbnail,
                 has_spoiler=True,
@@ -209,7 +214,7 @@ async def start_pm(client, message: Message, _):
                 reply_markup=key,
             )
             if await is_on_off(2):
-                return await app.send_message(
+                return await get_client().send_message(
                     chat_id=config.LOGGER_ID,
                     text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ ᴛᴏ ᴄʜᴇᴄᴋ <b>ᴛʀᴀᴄᴋ ɪɴғᴏʀᴍᴀᴛɪᴏɴ</b>.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
                 )
@@ -222,7 +227,7 @@ async def start_pm(client, message: Message, _):
             out=out,
         )
         if await is_on_off(2):
-            return await app.send_message(
+            return await get_client().send_message(
                 chat_id=config.LOGGER_ID,
                 text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
             )
@@ -236,7 +241,7 @@ async def start_gp(client, message: Message, _):
     await message.reply_photo(
         photo=random.choice(START_IMAGES),
         has_spoiler=True,
-        caption=_["start_1"].format(app.mention, get_readable_time(uptime)),
+        caption=_["start_1"].format(get_client().mention, get_readable_time(uptime)),
         reply_markup=InlineKeyboardMarkup(out),
     )
     return await add_served_chat(message.chat.id)
@@ -253,20 +258,20 @@ async def welcome(client, message: Message):
                     await message.chat.ban_member(member.id)
                 except:
                     pass
-            if member.id == app.id:
+            if member.id == get_client().id:
                 if message.chat.type != ChatType.SUPERGROUP:
                     await message.reply_text(_["start_4"])
-                    return await app.leave_chat(message.chat.id)
+                    return await get_client().leave_chat(message.chat.id)
                 if message.chat.id in await blacklisted_chats():
                     await message.reply_text(
                         _["start_5"].format(
-                            app.mention,
-                            f"https://t.me/{app.username}?start=sudolist",
+                            get_client().mention,
+                            f"https://t.me/{get_client().username}?start=sudolist",
                             config.SUPPORT_CHAT,
                         ),
                         disable_web_page_preview=True,
                     )
-                    return await app.leave_chat(message.chat.id)
+                    return await get_client().leave_chat(message.chat.id)
 
                 out = start_panel(_)
                 await message.reply_photo(
@@ -274,18 +279,18 @@ async def welcome(client, message: Message):
                     has_spoiler=True,
                     caption=_["start_3"].format(
                         message.from_user.first_name,
-                        app.mention,
+                        get_client().mention,
                         message.chat.title,
-                        app.mention,
+                        get_client().mention,
                     ),
                     reply_markup=InlineKeyboardMarkup(out),
                 )
                 await add_served_chat(message.chat.id)
                 userbot = await get_assistant(message.chat.id)
-                myu = await message.reply_text(_["call_4"].format(app.mention))
+                myu = await message.reply_text(_["call_4"].format(get_client().mention))
                 try:
                     try:
-                        get = await app.get_chat_member(message.chat.id, userbot.id)
+                        get = await get_client().get_chat_member(message.chat.id, userbot.id)
                     except ChatAdminRequired:
                         return
                     if (
@@ -293,7 +298,7 @@ async def welcome(client, message: Message):
                         or get.status == ChatMemberStatus.RESTRICTED
                     ):
                         try:
-                            await app.unban_chat_member(message.chat.id, userbot.id)
+                            await get_client().unban_chat_member(message.chat.id, userbot.id)
                         except:
                             return
                 except:
@@ -307,7 +312,7 @@ async def welcome(client, message: Message):
                         pass
                 else:
                     try:
-                        invitelink = await app.export_chat_invite_link(message.chat.id)
+                        invitelink = await get_client().export_chat_invite_link(message.chat.id)
                     except:
                         return
 
@@ -318,10 +323,10 @@ async def welcome(client, message: Message):
                 try:
                     await asyncio.sleep(1)
                     await userbot.join_chat(invitelink)
-                    await myu.edit(_["call_5"].format(app.mention))
+                    await myu.edit(_["call_5"].format(get_client().mention))
                 except InviteRequestSent:
                     try:
-                        await app.approve_chat_join_request(
+                        await get_client().approve_chat_join_request(
                             message.chat.id, userbot.id
                         )
                     except:
