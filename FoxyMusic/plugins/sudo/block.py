@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -47,7 +52,7 @@ async def sudoers_list(client, message: Message, _):
     count = 0
     for users in BANNED_USERS:
         try:
-            user = await app.get_users(users)
+            user = await get_client().get_users(users)
             user = user.first_name if not user.mention else user.mention
             count += 1
         except:

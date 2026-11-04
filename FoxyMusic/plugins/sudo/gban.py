@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 
 from pyrogram import filters
@@ -24,7 +29,7 @@ async def global_ban(client, message: Message, _):
     user = await extract_user(message)
     if user.id == message.from_user.id:
         return await message.reply_text(_["gban_1"])
-    elif user.id == app.id:
+    elif user.id == get_client().id:
         return await message.reply_text(_["gban_2"])
     elif user.id in SUDOERS:
         return await message.reply_text(_["gban_3"])
@@ -42,7 +47,7 @@ async def global_ban(client, message: Message, _):
     number_of_chats = 0
     for chat_id in served_chats:
         try:
-            await app.ban_chat_member(chat_id, user.id)
+            await get_client().ban_chat_member(chat_id, user.id)
             number_of_chats += 1
         except FloodWait as fw:
             await asyncio.sleep(int(fw.value))
@@ -51,7 +56,7 @@ async def global_ban(client, message: Message, _):
     await add_banned_user(user.id)
     await message.reply_text(
         _["gban_6"].format(
-            app.mention,
+            get_client().mention,
             message.chat.title,
             message.chat.id,
             user.mention,
@@ -84,7 +89,7 @@ async def global_un(client, message: Message, _):
     number_of_chats = 0
     for chat_id in served_chats:
         try:
-            await app.unban_chat_member(chat_id, user.id)
+            await get_client().unban_chat_member(chat_id, user.id)
             number_of_chats += 1
         except FloodWait as fw:
             await asyncio.sleep(int(fw.value))
@@ -108,7 +113,7 @@ async def gbanned_list(client, message: Message, _):
     for user_id in users:
         count += 1
         try:
-            user = await app.get_users(user_id)
+            user = await get_client().get_users(user_id)
             user = user.first_name if not user.mention else user.mention
             msg += f"{count}➤ {user}\n"
         except Exception:

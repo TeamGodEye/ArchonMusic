@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -24,11 +29,11 @@ async def maintenance(client, message: Message):
             await message.reply_text(_["maint_4"])
         else:
             await maintenance_on()
-            await message.reply_text(_["maint_2"].format(app.mention))
+            await message.reply_text(_["maint_2"].format(get_client().mention))
     elif state == "disable":
         if await is_maintenance() is False:
             await maintenance_off()
-            await message.reply_text(_["maint_3"].format(app.mention))
+            await message.reply_text(_["maint_3"].format(get_client().mention))
         else:
             await message.reply_text(_["maint_5"])
     else:

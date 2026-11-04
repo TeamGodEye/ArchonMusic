@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 
@@ -7,12 +12,12 @@ from config import LOGGER_ID as LOG_GROUP_ID
 
 
 async def new_message(chat_id: int, message: str, reply_markup=None):
-    await app.send_message(chat_id=chat_id, text=message, reply_markup=reply_markup)
+    await get_client().send_message(chat_id=chat_id, text=message, reply_markup=reply_markup)
 
 
 @app.on_message(filters.new_chat_members)
 async def on_new_chat_members(client: Client, message: Message):
-    if app.id in [user.id for user in message.new_chat_members]:
+    if get_client().id in [user.id for user in message.new_chat_members]:
         added_by = message.from_user.mention if message.from_user else "ᴜɴᴋɴᴏᴡɴ ᴜsᴇʀ"
         title = message.chat.title
         username = f"@{message.chat.username}"
@@ -35,7 +40,7 @@ async def on_new_chat_members(client: Client, message: Message):
 
 @app.on_message(filters.left_chat_member)
 async def on_left_chat_member(client: Client, message: Message):
-    if app.id == message.left_chat_member.id:
+    if get_client().id == message.left_chat_member.id:
         remove_by = message.from_user.mention if message.from_user else "ᴜɴᴋɴᴏᴡɴ ᴜsᴇʀ"
         title = message.chat.title
         username = f"@{message.chat.username}"

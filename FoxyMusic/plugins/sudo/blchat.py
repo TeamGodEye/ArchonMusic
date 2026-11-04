@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -23,7 +28,7 @@ async def blacklist_chat_func(client, message: Message, _):
     else:
         await message.reply_text(_["black_9"])
     try:
-        await app.leave_chat(chat_id)
+        await get_client().leave_chat(chat_id)
     except:
         pass
 
@@ -51,12 +56,12 @@ async def all_chats(client, message: Message, _):
     j = 0
     for count, chat_id in enumerate(await blacklisted_chats(), 1):
         try:
-            title = (await app.get_chat(chat_id)).title
+            title = (await get_client().get_chat(chat_id)).title
         except:
             title = "ᴘʀɪᴠᴀᴛᴇ ᴄʜᴀᴛ"
         j = 1
         text += f"{count}. {title}[<code>{chat_id}</code>]\n"
     if j == 0:
-        await message.reply_text(_["black_8"].format(app.mention))
+        await message.reply_text(_["black_8"].format(get_client().mention))
     else:
         await message.reply_text(text)

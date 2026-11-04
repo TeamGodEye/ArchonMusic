@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 import asyncio
 import os
 import shutil
@@ -95,9 +100,9 @@ async def update_(client, message, _):
         chats = await get_active_chats()
         for x in chats:
             try:
-                await app.send_message(
+                await get_client().send_message(
                     int(x),
-                    _["server_8"].format(app.mention),
+                    _["server_8"].format(get_client().mention),
                 )
                 await remove_active_chat(x)
                 await remove_active_video_chat(x)
@@ -120,7 +125,7 @@ async def update_(client, message, _):
             )
             return
         except Exception as err:
-            await app.send_message(
+            await get_client().send_message(
                 config.LOGGER_ID,
                 _["server_10"].format(err),
             )
@@ -137,9 +142,9 @@ async def restart_(_, message):
     chats = await get_active_chats()
     for x in chats:
         try:
-            await app.send_message(
+            await get_client().send_message(
                 int(x),
-                f"{app.mention} ɪs ʀᴇsᴛᴀʀᴛɪɴɢ...\n\n"
+                f"{get_client().mention} ɪs ʀᴇsᴛᴀʀᴛɪɴɢ...\n\n"
                 "ʏᴏᴜ ᴄᴀɴ sᴛᴀʀᴛ ᴩʟᴀʏɪɴɢ ᴀɢᴀɪɴ "
                 "ᴀғᴛᴇʀ 15-20 sᴇᴄᴏɴᴅs.",
             )

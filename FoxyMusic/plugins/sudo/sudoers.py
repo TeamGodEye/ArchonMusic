@@ -1,3 +1,8 @@
+# ─────「 𝐅ᴏxʏ 」─────
+#    Official Project Source
+# ────────────────────────
+
+from FoxyMusic.core.client_context import get_client
 from pyrogram import filters
 from pyrogram.types import Message
 
@@ -48,7 +53,7 @@ async def userdel(client, message: Message, _):
 @language
 async def sudoers_list(client, message: Message, _):
     text = _["sudo_5"]
-    user = await app.get_users(OWNER_ID)
+    user = await get_client().get_users(OWNER_ID)
     user = user.first_name if not user.mention else user.mention
     text += f"1➤ {user}\n"
     count = 0
@@ -56,7 +61,7 @@ async def sudoers_list(client, message: Message, _):
     for user_id in SUDOERS:
         if user_id != OWNER_ID:
             try:
-                user = await app.get_users(user_id)
+                user = await get_client().get_users(user_id)
                 user = user.first_name if not user.mention else user.mention
                 if smex == 0:
                     smex += 1
