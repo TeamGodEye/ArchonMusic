@@ -31,7 +31,7 @@ MAX_CLONES_PER_USER = 5
 # Commands that should only be handled by the primary bot. Music, settings,
 # playback, help, language, and normal group commands remain available.
 CLONE_BLOCKED_COMMANDS = {
-    "clone", "unclone", "clones", "resetclones", "autoend", "autoleave", "stats",
+    "unclone", "clones", "resetclones", "autoend", "autoleave", "stats",
     "broadcast", "bstatus", "bcancel", "prime", "live",
     "restart", "reboot", "reload", "update", "maintenance",
     "addsudo", "delsudo", "rmsudo", "sudolist", "listsudo", "sudoers",
