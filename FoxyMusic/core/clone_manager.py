@@ -32,7 +32,7 @@ MAX_CLONES_PER_USER = 5
 # playback, help, language, and normal group commands remain available.
 CLONE_BLOCKED_COMMANDS = {
     "unclone", "clones", "resetclones", "autoend", "autoleave", "stats",
-    "broadcast", "bstatus", "bcancel", "prime", "live",
+    "broadcast", "cbroadcast", "bstatus", "bcancel", "prime", "live",
     "restart", "reboot", "reload", "update", "maintenance",
     "addsudo", "delsudo", "rmsudo", "sudolist", "listsudo", "sudoers",
     "gban", "globalban", "ungban", "gbannedusers", "gbanlist",
@@ -166,7 +166,7 @@ class CloneManager:
         if attached == 0:
             raise RuntimeError(
                 "No handlers were available to copy. Clone startup must run "
-                "after all FoxyMusic plugins have loaded."
+                "after all KavyaMusic plugins have loaded."
             )
         return attached
 
